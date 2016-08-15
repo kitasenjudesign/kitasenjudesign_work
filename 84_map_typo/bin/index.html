@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta name="viewport" content="width=640">
+	<meta charset="utf-8"/>
+	<title>Crop Circle Typo</title>
+	<meta name="description" content="" />
+	<style type="text/css">
+	body{
+		background-color:#000;
+		margin:0;
+		padding:0;
+		overflow:hidden;
+	}
+	
+	#canvas1{
+		position:absolute;
+		top:0px;
+		left:0px;
+		z-index:0;
+	}
+	#canvas2{
+		position:absolute;
+		top:0px;
+		left:0px;
+		z-index:1;
+	}
+	#title{
+		
+		padding:5px;
+		color:#ffffff;
+		position:absolute;
+		width:100%;
+		text-align:center;
+		bottom:10px;
+		left:0px;
+		font-size:24px;
+		letter-spacing: 2px;
+		font-family: "Helvetica Neue", "Helvetica", "Arial", sans-serif;
+		z-index:200;
+		cursor: pointer;
+		text-shadow: 0px 0px 4px #000;  
+		
+	}
+	</style>
+</head>
+<body>
+
+	<div id="title"></div>
+	
+	<script src="dat.gui.min.js"></script>
+	<script src="createjs-2013.09.25.min.js"></script>
+	<script src="jquery-1.10.2.min.js"></script>
+	<script src="Sin.js"></script>
+
+	<canvas id="canvas1"></canvas>
+	<canvas id="canvas2"></canvas>	
+
+</body>
+</html>
