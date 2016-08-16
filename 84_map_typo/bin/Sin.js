@@ -142,6 +142,7 @@ FontTest.getLetterPoints = function(g,moji,isCentering,scale,letter,oxx,oyy) {
 	var maxY = 0;
 	var shape = g;
 	var motif = letter.motifs.get(moji);
+	if(motif == null || motif.length == 0) return;
 	var ox = oxx;
 	var oy = oyy;
 	var s = scale;
@@ -285,9 +286,11 @@ Main.prototype = {
 		Main._stage1.clear();
 		Main._stage2.clear();
 		this._data = Main._loader.getRandom();
-		new js.JQuery("#title").text("#" + this._data.id + " " + this._data.title);
-		new js.JQuery("#title").off("click");
-		new js.JQuery("#title").on("click",$bind(this,this._goMap));
+		new js.JQuery("#region_no").text("#" + this._data.id);
+		new js.JQuery("#title").text(this._data.title);
+		new js.JQuery("#footer").off("click");
+		new js.JQuery("#footer").on("click",$bind(this,this._goMap));
+		new js.JQuery("#footer").css({ left : window.innerWidth / 2 - new js.JQuery("#footer").width() / 2, top : window.innerHeight - new js.JQuery("#footer").height() - 20});
 		if(Main._typo != null) Main._stage2.removeChild(Main._typo);
 		Main._typo = new MainDrawer();
 		Main._typo.init(this._data,$bind(this,this._onLoadMainDrawer));
@@ -304,7 +307,7 @@ Main.prototype = {
 		Main._stage2.update();
 	}
 	,_goMap: function(e) {
-		window.location.href = this._data.map;
+		window.open(this._data.url,"map");
 	}
 	,_onResize: function(e) {
 		Main._canvas1.width = window.innerWidth;
@@ -380,11 +383,18 @@ MainDrawer.prototype = $extend(createjs.Container.prototype,{
 		haxe.Timer.delay($bind(this,this._start),1000);
 	}
 	,_start: function() {
+		this._motionData = data.MotionData.getData();
 		this._isStart = true;
 	}
 	,update: function() {
 		this._counter++;
-		if(this._isStart) this._container.rotation += this._rotSpeed;
+		if(this._isStart) {
+			this._container.x += this._motionData.speedX;
+			this._container.y += this._motionData.speedY;
+			this._container.rotation += this._motionData.speedR;
+			if(this._container.x < 0) this._container.x = window.innerWidth; else this._container.x = this._container.x % window.innerWidth;
+			if(this._container.y < 0) this._container.y = window.innerHeight; else this._container.y = this._container.y % window.innerHeight;
+		}
 		if(this._shapes != null) {
 			var _g1 = 0;
 			var _g = this._shapes.length;
@@ -452,20 +462,23 @@ var data = {};
 data.MapData = function(o) {
 	this.region = "";
 	this.title = "";
+	this.url = "";
 	this.map = "";
 	this.image = "";
 	this.id = "";
-	if(o.region != "") {
-		this.title = Std.string(o.region) + ", " + Std.string(o.country);
-		this.region = o.region;
-	} else {
-		this.title = o.country;
-		this.region = o.country;
-	}
 	this.image = o.image;
 	var imgAry = this.image.split("/");
 	this.id = imgAry[imgAry.length - 1].split(".")[0];
 	this.title = this.title.toUpperCase();
+	if(o.region != "") {
+		this.title = Std.string(o.region) + ", " + Std.string(o.country);
+		this.region = o.region;
+		this.url = "https://earthview.withgoogle.com/" + this.region + "-" + Std.string(o.country) + "-" + this.id;
+	} else {
+		this.title = o.country;
+		this.region = o.country;
+		this.url = "https://earthview.withgoogle.com/" + Std.string(o.country) + "-" + this.id;
+	}
 	this.map = o.map;
 };
 data.MapData.__name__ = true;
@@ -494,6 +507,18 @@ data.MapDataList.prototype = {
 	,getRandom: function() {
 		return this._list[Math.floor(Math.random() * this._list.length)];
 	}
+};
+data.MotionData = function(xx,yy,rr) {
+	this.speedR = 0;
+	this.speedY = 0;
+	this.speedX = 0;
+	this.speedX = xx;
+	this.speedY = yy;
+	this.speedR = rr;
+};
+data.MotionData.__name__ = true;
+data.MotionData.getData = function() {
+	return data.MotionData.list[Math.floor(Math.random() * data.MotionData.list.length)];
 };
 var haxe = {};
 haxe.Http = function(url) {
@@ -536,8 +561,7 @@ haxe.Http.prototype = {
 			default:
 				me.req = null;
 				me.responseData = r.responseText;
-				console.log("Unko");
-				if("" + r.status == "0") me.onData(me.responseData = r.responseText); else me.onError("Http Error #" + r.status);
+				me.onError("Http Error #" + r.status);
 			}
 		};
 		if(this.async) r.onreadystatechange = onreadystatechange;
@@ -1550,5 +1574,13 @@ Three.RGBA_S3TC_DXT3_Format = 2003;
 Three.RGBA_S3TC_DXT5_Format = 2004;
 Three.LineStrip = 0;
 Three.LinePieces = 1;
+data.MotionData.R1 = new data.MotionData(0,0,0.5);
+data.MotionData.R2 = new data.MotionData(0,0,-0.5);
+data.MotionData.Y1 = new data.MotionData(0,1,0);
+data.MotionData.Y2 = new data.MotionData(0,-1,0);
+data.MotionData.XY1 = new data.MotionData(0.2,-1,0);
+data.MotionData.XY2 = new data.MotionData(-0.2,1,0);
+data.MotionData.XYR = new data.MotionData(0,0.25,0.5);
+data.MotionData.list = [data.MotionData.R1,data.MotionData.R2,data.MotionData.Y1,data.MotionData.Y2,data.MotionData.XY1,data.MotionData.XY2,data.MotionData.XYR];
 Main.main();
 })();

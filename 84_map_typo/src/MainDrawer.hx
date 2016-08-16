@@ -3,6 +3,7 @@ import createjs.easeljs.Container;
 import createjs.easeljs.Matrix2D;
 import createjs.easeljs.Shape;
 import data.MapData;
+import data.MotionData;
 import haxe.Timer;
 import js.Browser;
 import js.html.ImageElement;
@@ -28,7 +29,9 @@ class MainDrawer extends Container
 	private var _counter:Int = 0;
 	private var _container:Container;
 	private var _rotSpeed:Float = 0;
-	var _isStart:Bool = false;
+	private var _isStart:Bool = false;
+	private var _motionData:MotionData;
+	
 	public function new() 
 	{
 		super();
@@ -120,6 +123,7 @@ class MainDrawer extends Container
 		);
 		
 		var shape:Shape = new Shape();
+		//shape.graphics.beginStroke("#ffffff");
 		shape.graphics.beginBitmapFill(_img, null, m);
 		//shape.graphics.beginFill("#ff0000");
 		shape.x = xx;
@@ -134,14 +138,29 @@ class MainDrawer extends Container
 	
 	function _start() 
 	{
+		_motionData = MotionData.getData();
 		_isStart = true;
+		//_container.scaleX = 0.1;
+		//_container.scaleY = 0.1;
 	}
 	
 	public function update():Void {
 
 		_counter++;
 		
-		if(_isStart)_container.rotation += _rotSpeed;
+		if (_isStart) {
+			_container.x += _motionData.speedX;
+			_container.y += _motionData.speedY;
+			_container.rotation += _motionData.speedR;
+			
+			if (_container.x < 0) _container.x = Browser.window.innerWidth;
+			else _container.x = _container.x % Browser.window.innerWidth;
+			
+			if (_container.y < 0) _container.y = Browser.window.innerHeight;
+			else _container.y = _container.y % Browser.window.innerHeight;
+			
+			
+		}
 		
 		if (_shapes != null) {
 			

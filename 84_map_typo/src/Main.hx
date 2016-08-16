@@ -87,15 +87,22 @@ class Main
 		new JQuery("#canvas1").hide();
 		new JQuery("#canvas2").hide();
 		
-		
 		_stage1.clear();
 		_stage2.clear();
 		
 		_data = _loader.getRandom();
-		new JQuery("#title").text("#"+_data.id +" "+_data.title);
-		new JQuery("#title").off("click");
-		new JQuery("#title").on("click", _goMap);
 		
+		new JQuery("#region_no").text("#" + _data.id);
+		new JQuery("#title").text(_data.title);
+		new JQuery("#footer").off("click");
+		new JQuery("#footer").on("click", _goMap);
+		new JQuery("#footer").css({
+			{
+				left:Browser.window.innerWidth / 2 - new JQuery("#footer").width() / 2,
+				top:Browser.window.innerHeight - new JQuery("#footer").height() - 20
+				
+			}
+		});
 		//trace(_data.image);
 		
 		if (_typo != null) {
@@ -120,27 +127,22 @@ class Main
 		new JQuery("#canvas1").show();
 		new JQuery("#canvas2").show();
 		
-		
-		//_bg = new Bitmap(_data.image);
 		_bg = new BgDrawer();
 		_bg.init(_typo.getImage());
 		_stage1.addChild(_bg);
-		
 		_stage1.update();
-		//_stage1.update();
 		_stage2.update();
-		
 
 	}
 	
 	function _goMap(e) 
 	{
-		Browser.window.location.href = _data.map;
+		//Browser.window.location.href = _data.map;
+		Browser.window.open(_data.url, "map");
 	}
 	
 	function _onResize(e):Void 
 	{
-		
 		_canvas1.width 		= Browser.window.innerWidth;
 		_canvas1.height 	= Browser.window.innerHeight;
 		
@@ -148,7 +150,6 @@ class Main
 		_canvas2.height 	= Browser.window.innerHeight;
 		
 		_stage1.clear();
-		
 	}
 	
 	static private function _update(e):Void 

@@ -32,6 +32,10 @@ class FontTest
 		
 			var shape:Graphics = g;
 			var motif:Array<Dynamic> = letter.motifs.get(moji);
+			
+			if (motif == null || motif.length == 0) return;
+			
+			
 			var ox:Float = oxx;
 			var oy:Float = oyy;
 			var s:Float = scale;
