@@ -1,0 +1,21 @@
+body{margin:0;padding:0;background-color:#000;font-size:25px;font-family:"HelveticaNeue-Light","游ゴシック体","Yu Gothic",YuGothic,sans-serif;font-weight:normal;letter-spacing:2px;}
+h1{margin-bottom:50px;padding:10px 30px;font-weight:normal;font-size:45px;line-height:130%;letter-spacing:3px;}
+.title_bg{background-color:rgba(0,0,0,0.5);font-weight:normal;padding:5px 10px;color:#fff;font-size:45px;}
+.title2{background-color:rgba(0,0,0,0.5);font-weight:normal;color:#fff;font-size:22px;padding:10px 10px;}
+#vi{position:absolute;top:0,left:0 background-color:#fff;border:1px;display:none;}
+#image{cursor:auto;}
+#generate{display:none;position:absolute;left:392px;top:900px;z-index:1003;}
+#save{}
+#repeat{}
+#first{position:absolute;width:1024px;z-index:1001;text-align:center;}
+#last{position:absolute;display:none;text-align:center;z-index:1050;top:900px;width:1024px;}
+#info{position:absolute;top:500px;z-index:1100;text-align:center;width:1024px;color:#000;font-size:30px;display:none;}
+#bg{width:1024px;height:1024px;background-color:#fff;position:absolute;z-index:90;}
+.uploadButton{margin:5px;display:inline-block;position:relative;overflow:hidden;background:rgba(0,0,0,0.5);color:#fff;border:2px solid rgba(255,255,255,0.8);text-align:center;padding:15px 10px;line-height:30px;width:220px;font-size:30px;cursor:pointer;}
+.uploadButton:hover{background:#fff;color:#000;}
+.uploadButton input[type=file]{position:absolute;top:0;left:0;width:100%;height:100%;cursor:pointer;opacity:0;}
+.uploadValue{display:none;background:rgba(255,255,255,0.2);padding:6px;color:#ffffff;}
+#container{position:absolute;z-index:9999999;transform:scale(0.7,0.7);-webkit-transform:scale(0.7,0.7);-moz-transform:scale(0.7,0.7);}
+#canvas{position:absolute;z-index:221110;}
+.fb-like{margin:0;padding:0;}
+#social{padding:0;margin:0;z-index:99999999;position:fixed;left:6px;bottom:0px;}

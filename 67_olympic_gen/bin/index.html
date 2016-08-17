@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+	<meta charset="utf-8"/>
+	
+	<title>TOKYO OLYMPIC GENERATOR</title>
+	
+	<meta name="description" content="あなただけのオリンピックエンブレムを作ろう。" />
+	<meta property="og:image" content="http://kitasenjudesign.com/work/67/hoge1.png">
+
+		<link rel="stylesheet" href="index.css" type="text/css" />
+
+	
+	</style>
+</head>
+<body>
+
+	<video id="vi" width="400" height="300" autoplay></video>
+	
+	<div id="container">
+		
+		<div id="bg"></div>
+		
+		<div id="info">Please allow access from the menu above</div>
+		
+		<div id="first">
+			<h1>
+				<span class="title_bg">Your Tokyo Olympic Generator</span><br/>
+				<span class="title2">あなただけの東京オリンピックジェネレーター</span>
+			</h1>
+			<div id="webcam" class="uploadButton">Webcam</div>			
+			<div class="uploadButton">
+				<span id="imageBtnTitle">Image</span>
+				<input type="file" accept="image/*" id="imageFile"/>
+				<!--input type="text" id="uv" class="uploadValue" disabled /-->
+			</div>		
+		</div>
+		
+			
+		<div id="generate" class="uploadButton">Generate!</div>
+		
+		<div id="last">
+			<div id="repeat" class="uploadButton">Redo</div>
+			<div id="save" class="uploadButton">Download</div>
+		</div>
+
+		<canvas id="canvas"></canvas>
+		
+	</div>	
+	
+	<script src="TweenMax.min.js"></script>
+	<script src="jquery-2.1.4.min.js"></script>
+	<script src="dat.gui.min.js"></script>	
+	<script src="createjs-2014.12.12.min.js"></script>
+	<script src="FractalMoji.js"></script>
+	
+
+<!-- [head]内や、[body]の終了直前などに配置 -->
+
+<div id="social">	
+	<div class="fb-like" data-href="http://kitasenjudesign.com/work/67/" data-layout="button_count" data-action="like" data-show-faces="true" data-share="false"></div>
+	
+	<div id="fb-root"></div>
+	<script>(function(d, s, id) {
+		var js, fjs = d.getElementsByTagName(s)[0];
+		if (d.getElementById(id)) return;
+		js = d.createElement(s); js.id = id;
+		js.src = "//connect.facebook.net/ja_JP/sdk.js#xfbml=1&version=v2.0";
+		fjs.parentNode.insertBefore(js, fjs);
+	}(document, 'script', 'facebook-jssdk'));</script>
+	
+	<a href="https://twitter.com/share" class="twitter-share-button" data-url="http://kitasenjudesign.com/work/67/" data-hashtags="">Tweet</a>
+	<script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+'://platform.twitter.com/widgets.js';fjs.parentNode.insertBefore(js,fjs);}}(document, 'script', 'twitter-wjs');</script>
+		
+</div>
+
+	<script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+  ga('create', 'UA-52584766-1', 'auto');
+  ga('send', 'pageview');
+
+	</script>
+
+</body>
+</html>
