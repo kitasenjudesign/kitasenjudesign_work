@@ -326,8 +326,7 @@ haxe.Http.prototype = {
 			default:
 				me.req = null;
 				me.responseData = r.responseText;
-				console.log("Unko");
-				if("" + r.status == "0") me.onData(me.responseData = r.responseText); else me.onError("Http Error #" + r.status);
+				me.onError("Http Error #" + r.status);
 			}
 		};
 		if(this.async) r.onreadystatechange = onreadystatechange;
