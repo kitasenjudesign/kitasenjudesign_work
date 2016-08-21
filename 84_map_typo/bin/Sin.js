@@ -400,6 +400,7 @@ MainDrawer.prototype = $extend(createjs.Container.prototype,{
 			var _g = this._shapes.length;
 			while(_g1 < _g) {
 				var i = _g1++;
+				this._shapes[i].rotation += this._motionData.speedLocalR;
 			}
 		}
 	}
@@ -508,13 +509,16 @@ data.MapDataList.prototype = {
 		return this._list[Math.floor(Math.random() * this._list.length)];
 	}
 };
-data.MotionData = function(xx,yy,rr) {
+data.MotionData = function(xx,yy,rr,localRot) {
+	if(localRot == null) localRot = 0;
+	this.speedLocalR = 0;
 	this.speedR = 0;
 	this.speedY = 0;
 	this.speedX = 0;
 	this.speedX = xx;
 	this.speedY = yy;
 	this.speedR = rr;
+	this.speedLocalR = localRot;
 };
 data.MotionData.__name__ = true;
 data.MotionData.getData = function() {
@@ -1582,6 +1586,9 @@ data.MotionData.XY1 = new data.MotionData(0.25,-1,0);
 data.MotionData.XY2 = new data.MotionData(-0.25,1,0);
 data.MotionData.XYR = new data.MotionData(0,0.25,0.5);
 data.MotionData.XYR2 = new data.MotionData(0.25,1,0.5);
-data.MotionData.list = [data.MotionData.R1,data.MotionData.R2,data.MotionData.R1,data.MotionData.R2,data.MotionData.Y1,data.MotionData.Y2,data.MotionData.XY1,data.MotionData.XY2,data.MotionData.XYR,data.MotionData.XYR2];
+data.MotionData.LOCAL1 = new data.MotionData(0,0,0,0.4);
+data.MotionData.LOCAL2 = new data.MotionData(0,-0.5,0,-0.4);
+data.MotionData.LOCAL3 = new data.MotionData(0,0,0,-0.4);
+data.MotionData.list = [data.MotionData.R1,data.MotionData.R2,data.MotionData.R1,data.MotionData.R2,data.MotionData.Y1,data.MotionData.Y2,data.MotionData.XY1,data.MotionData.XY2,data.MotionData.XYR,data.MotionData.XYR2,data.MotionData.LOCAL1,data.MotionData.LOCAL2,data.MotionData.LOCAL3];
 Main.main();
 })();
