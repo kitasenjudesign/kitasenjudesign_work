@@ -264,6 +264,7 @@ Main.prototype = {
 	initialize: function(e) {
 		Main._loader = new data.MapDataList();
 		Main._loader.load($bind(this,this._onLoad));
+		this._onResize(null);
 	}
 	,_onLoad: function() {
 		Main._canvas1 = window.document.getElementById("canvas1");
@@ -288,15 +289,22 @@ Main.prototype = {
 		this._data = Main._loader.getRandom();
 		new js.JQuery("#region_no").text("#" + this._data.id);
 		new js.JQuery("#title").text(this._data.title);
-		new js.JQuery("#footer").off("click");
-		new js.JQuery("#footer").on("click",$bind(this,this._goMap));
-		new js.JQuery("#footer").css({ left : window.innerWidth / 2 - new js.JQuery("#footer").width() / 2, top : window.innerHeight - new js.JQuery("#footer").height() - 20});
+		new js.JQuery("#title").off("click");
+		new js.JQuery("#title").on("click",$bind(this,this._goMap));
+		new js.JQuery("#google").off("click");
+		new js.JQuery("#google").on("click",$bind(this,this._goGoogle));
+		new js.JQuery("#google").text("earthview.withgoogle.com");
+		new js.JQuery("#loading").show();
+		new js.JQuery("#loading").text("LOADING");
+		new js.JQuery("#title").text(this._data.title);
 		if(Main._typo != null) Main._stage2.removeChild(Main._typo);
 		Main._typo = new MainDrawer();
 		Main._typo.init(this._data,$bind(this,this._onLoadMainDrawer));
 		Main._stage2.addChild(Main._typo);
+		this._onResize(null);
 	}
 	,_onLoadMainDrawer: function() {
+		new js.JQuery("#loading").hide();
 		if(Main._bg != null) Main._stage1.removeChild(Main._bg);
 		new js.JQuery("#canvas1").show();
 		new js.JQuery("#canvas2").show();
@@ -307,13 +315,18 @@ Main.prototype = {
 		Main._stage2.update();
 	}
 	,_goMap: function(e) {
-		window.open(this._data.url,"map");
+		window.open(this._data.map,"map");
+	}
+	,_goGoogle: function(e) {
+		window.open(this._data.url,"google");
 	}
 	,_onResize: function(e) {
 		Main._canvas1.width = window.innerWidth;
 		Main._canvas1.height = window.innerHeight;
 		Main._canvas2.width = window.innerWidth;
 		Main._canvas2.height = window.innerHeight;
+		new js.JQuery("#loading").css({ left : window.innerWidth / 2 - new js.JQuery("#loading").width() / 2, top : 10});
+		new js.JQuery("#footer").css({ left : window.innerWidth / 2 - new js.JQuery("#footer").width() / 2, top : window.innerHeight - new js.JQuery("#footer").height() - 20});
 		Main._stage1.clear();
 	}
 };
@@ -400,7 +413,7 @@ MainDrawer.prototype = $extend(createjs.Container.prototype,{
 			var _g = this._shapes.length;
 			while(_g1 < _g) {
 				var i = _g1++;
-				this._shapes[i].rotation += this._motionData.speedLocalR;
+				if(this._motionData != null) this._shapes[i].rotation += this._motionData.speedLocalR;
 			}
 		}
 	}

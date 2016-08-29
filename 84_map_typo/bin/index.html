@@ -13,6 +13,8 @@
 		margin:0;
 		padding:0;
 		overflow:hidden;
+		font-family: "Helvetica Neue", "Helvetica", "Arial", sans-serif;
+		
 	}
 	
 	#canvas1{
@@ -27,6 +29,14 @@
 		left:0px;
 		z-index:1;
 	}
+	
+	#loading{
+		color:#ffffff;
+		position:absolute;
+		z-index:201;
+		letter-spacing: 1px;
+	}
+	
 	#footer{
 		
 		padding:5px;
@@ -34,7 +44,6 @@
 		position:absolute;
 		text-align:center;
 		
-		font-family: "Helvetica Neue", "Helvetica", "Arial", sans-serif;
 		z-index:200;
 		cursor: pointer;
 		text-shadow: 0px 0px 4px #000;  
@@ -54,18 +63,23 @@
 		font-size:14px;	
 	}
 	
-	#footer:hover{
+	#title:hover{
+		opacity:0.5;
+	}
+	#google:hover{
 		opacity:0.5;
 	}
 	
 	</style>
 </head>
 <body>
-
+	
+	<div id="loading"></div>
+	
 	<div id="footer">
 		<div class="mini" id="region_no"></div>
-		<div class="region" id="title">LOADING..</div>
-		<div class ="mini">earthview.withgoogle.com</div>		
+		<div class="region" id="title"></div>
+		<div class ="mini" id="google"></div>		
 	</div>
 	
 	<script src="dat.gui.min.js"></script>

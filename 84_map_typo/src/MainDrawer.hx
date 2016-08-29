@@ -167,7 +167,9 @@ class MainDrawer extends Container
 			
 			for (i in 0..._shapes.length) {
 				
-				_shapes[i].rotation += _motionData.speedLocalR;
+				if(_motionData!=null){
+					_shapes[i].rotation += _motionData.speedLocalR;
+				}
 				//if(_flag){
 					//_shapes[i].x += 1;// 3 * (Math.random() - 0.5);
 					//_shapes[i].y +=	0.5;// 3 * (Math.random() - 0.5);			

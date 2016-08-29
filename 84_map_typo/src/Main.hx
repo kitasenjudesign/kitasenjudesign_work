@@ -53,6 +53,7 @@ class Main
 	{
 		_loader = new MapDataList();
 		_loader.load(_onLoad);
+		_onResize(null);
 	}
 	
 	private function _onLoad():Void{
@@ -90,20 +91,22 @@ class Main
 		_stage1.clear();
 		_stage2.clear();
 		
+		
 		_data = _loader.getRandom();
 		
+		//new JQuery("#region_no").text("LOADING");
 		new JQuery("#region_no").text("#" + _data.id);
+		
 		new JQuery("#title").text(_data.title);
-		new JQuery("#footer").off("click");
-		new JQuery("#footer").on("click", _goMap);
-		new JQuery("#footer").css({
-			{
-				left:Browser.window.innerWidth / 2 - new JQuery("#footer").width() / 2,
-				top:Browser.window.innerHeight - new JQuery("#footer").height() - 20
-				
-			}
-		});
-		//trace(_data.image);
+		
+		new JQuery("#title").off("click");
+		new JQuery("#title").on("click", _goMap);
+		new JQuery("#google").off("click");
+		new JQuery("#google").on("click", _goGoogle);
+		new JQuery("#google").text("earthview.withgoogle.com");
+		new JQuery("#loading").show();
+		new JQuery("#loading").text("LOADING");
+		new JQuery("#title").text(_data.title);
 		
 		if (_typo != null) {
 			_stage2.removeChild(_typo);
@@ -112,6 +115,8 @@ class Main
 		_typo.init(_data,_onLoadMainDrawer);
 		_stage2.addChild(_typo);		
 		
+		_onResize(null);
+		
 	}
 	
 	/**
@@ -119,6 +124,8 @@ class Main
 	 */
 	private function _onLoadMainDrawer():Void
 	{
+		new JQuery("#loading").hide();
+		
 		//bg remove
 		if (_bg != null) {
 			_stage1.removeChild(_bg);
@@ -138,7 +145,12 @@ class Main
 	function _goMap(e) 
 	{
 		//Browser.window.location.href = _data.map;
-		Browser.window.open(_data.url, "map");
+		Browser.window.open(_data.map, "map");
+	}
+	function _goGoogle(e) 
+	{
+		//Browser.window.location.href = _data.map;
+		Browser.window.open(_data.url, "google");
 	}
 	
 	function _onResize(e):Void 
@@ -149,11 +161,27 @@ class Main
 		_canvas2.width 		= Browser.window.innerWidth;
 		_canvas2.height 	= Browser.window.innerHeight;
 		
+		new JQuery("#loading").css(
+			{
+				left:Browser.window.innerWidth / 2 - new JQuery("#loading").width() / 2,
+				top:10
+			}
+		);
+		
+		new JQuery("#footer").css({
+			{
+				left:Browser.window.innerWidth / 2 - new JQuery("#footer").width() / 2,
+				top:Browser.window.innerHeight - new JQuery("#footer").height() - 20
+			}
+		});		
+		
 		_stage1.clear();
 	}
 	
 	static private function _update(e):Void 
 	{
+		
+		
 		if(_typo!=null){
 			_typo.update();
 		}
